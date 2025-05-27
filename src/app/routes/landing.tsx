@@ -1,5 +1,11 @@
+import { LandingPage } from "@/features/landingPage/LandingPage";
+
 const LandingRoute = () => {
-  return <h1>Hello world from Landing Route</h1>;
+  return (
+    <>
+      <LandingPage />
+    </>
+  );
 };
 
 export default LandingRoute;
