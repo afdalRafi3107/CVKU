@@ -1,7 +1,23 @@
-export function Navbar() {
+import { Button } from "@/components/ui/button";
+import Logo from "@/assets/logo.png";
+function Navbar() {
   return (
     <>
-      <p>Hello this is navbar</p>
+      <nav className="flex justify-between items-center p-5 h-20 pr-20">
+        <img src={Logo} alt="" className="w-30 p-o m-0" />
+        <div className="flex items-center gap-20 font-bold text-2xl">
+          <p>Templates</p>
+          <p>Examples</p>
+          <Button
+            variant={"default"}
+            className="bg-green-500 h-12 cursor-pointer text-md font-bold transition active:scale-95 hover:bg-green-400"
+          >
+            Create Resume
+          </Button>
+        </div>
+      </nav>
     </>
   );
 }
+
+export default Navbar;
