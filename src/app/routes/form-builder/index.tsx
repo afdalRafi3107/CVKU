@@ -1,6 +1,3 @@
-import DaySelect from "@/components/forms/DaySelect";
-import MonthSelect from "@/components/forms/MonthSelect";
-import YearSelect from "@/components/forms/YearSelect";
 import InputFileImage from "@/components/input-12";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,31 +19,29 @@ import { Label } from "@/components/ui/label";
 import {
   FormPersonalDetailSchema,
   type PersonalDetailDTO,
-} from "@/schema/FormPersonalDetail";
-import { useState } from "react";
+} from "@/schema/FormPersonalDetailsSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { Popover, PopoverContent } from "@/components/ui/popover";
+import { PopoverTrigger } from "@radix-ui/react-popover";
+import { CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import { usePersonalDetailsStore } from "@/stores/personalDetailsStore";
 
 function FormBuilder() {
-  const [month, setMonth] = useState<string | undefined>();
+  const setData = usePersonalDetailsStore((state) => state.setData);
 
-  // const formSchema = z.object({
-  //   username: z.string().min(2, {
-  //     message: "Username must be at least 2 characters.",
-  //   }),
-  // });
-
-  // const form = useForm<z.infer<typeof formSchema>>({
-  //   resolver: zodResolver(formSchema),
-  // });
-
+  const { data } = usePersonalDetailsStore();
   const form = useForm<PersonalDetailDTO>({
     resolver: zodResolver(FormPersonalDetailSchema),
   });
 
-  function onSubmit(values: z.infer<typeof FormPersonalDetailSchema>) {
+  function onSubmit(values: PersonalDetailDTO) {
     console.log(values);
+    setData(values);
+    console.log("data", data);
   }
 
   return (
@@ -121,7 +116,7 @@ function FormBuilder() {
                               <Label htmlFor="email">Email</Label>
                               <FormControl>
                                 <Input
-                                  placeholder="Doe"
+                                  placeholder="example@example.com"
                                   id="email"
                                   {...field}
                                 />
@@ -142,7 +137,7 @@ function FormBuilder() {
                               </Label>
                               <FormControl>
                                 <Input
-                                  placeholder="Doe"
+                                  placeholder="081234567890"
                                   id="phone-number"
                                   {...field}
                                 />
@@ -161,11 +156,7 @@ function FormBuilder() {
                           <FormItem>
                             <Label htmlFor="address">Alamat</Label>
                             <FormControl>
-                              <Input
-                                placeholder="Doe"
-                                id="address"
-                                {...field}
-                              />
+                              <Input placeholder="" id="address" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -184,7 +175,7 @@ function FormBuilder() {
                               <Label htmlFor="postal-code">Kode Pos</Label>
                               <FormControl>
                                 <Input
-                                  placeholder="Doe"
+                                  placeholder=""
                                   id="postal-code"
                                   {...field}
                                 />
@@ -202,7 +193,7 @@ function FormBuilder() {
                             <FormItem>
                               <Label htmlFor="city">Kota</Label>
                               <FormControl>
-                                <Input placeholder="Doe" id="city" {...field} />
+                                <Input placeholder="" id="city" {...field} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -212,12 +203,56 @@ function FormBuilder() {
                     </div>
                     <div className="grid grid-cols-2 gap-5">
                       <div className="flex flex-col space-y-1.5">
-                        {/* Select Tanggal Lahir */}
-                        <Label htmlFor="city">Tanggal Lahir</Label>
-                        <div className="flex gap-3">
-                          <DaySelect />
-                          <MonthSelect value={month} onChange={setMonth} />
-                          <YearSelect />
+                        <div className="flex gap-3 w-full">
+                          <FormField
+                            control={form.control}
+                            name="birthDate"
+                            render={({ field }) => (
+                              <FormItem>
+                                <Label htmlFor="birth-date">
+                                  Tanggal Lahir
+                                </Label>
+                                <Popover>
+                                  <PopoverTrigger asChild>
+                                    <FormControl>
+                                      <Button
+                                        variant={"outline"}
+                                        className={cn(
+                                          "w-full pl-3 text-left font-normal",
+                                          !field.value &&
+                                            "text-muted-foreground"
+                                        )}
+                                      >
+                                        {field.value ? (
+                                          format(field.value, "PPP")
+                                        ) : (
+                                          <span>Pick a date</span>
+                                        )}
+                                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                      </Button>
+                                    </FormControl>
+                                  </PopoverTrigger>
+                                  <PopoverContent
+                                    className="w-auto p-0"
+                                    align="start"
+                                  >
+                                    <Calendar
+                                      mode="single"
+                                      selected={field.value}
+                                      onSelect={field.onChange}
+                                      disabled={(date) =>
+                                        date > new Date() ||
+                                        date < new Date("1900-01-01")
+                                      }
+                                      initialFocus
+                                    />
+                                    {/* <CustomDropdown /> */}
+                                  </PopoverContent>
+                                </Popover>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
                         </div>
                       </div>
                       <div className="flex flex-col space-y-1.5">
@@ -229,7 +264,7 @@ function FormBuilder() {
                               <Label htmlFor="birth-place">Tempat Lahir</Label>
                               <FormControl>
                                 <Input
-                                  placeholder="Doe"
+                                  placeholder=""
                                   id="birth-place"
                                   {...field}
                                 />
@@ -253,7 +288,7 @@ function FormBuilder() {
                             </Label>
                             <FormControl>
                               <Input
-                                placeholder="Doe"
+                                placeholder=""
                                 id="url-linkedin"
                                 {...field}
                               />
@@ -274,7 +309,7 @@ function FormBuilder() {
                             </Label>
                             <FormControl>
                               <Input
-                                placeholder="Doe"
+                                placeholder=""
                                 id="websiteUrl"
                                 {...field}
                               />
