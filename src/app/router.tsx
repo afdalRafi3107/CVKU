@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import LandingRoute from "./routes/landing";
 import FormBuilder from "./routes/formBuilder/FormBuilder";
+import ExperienceDetails from "./routes/formBuilder/FormExperience";
 
 const createAppRouter = () =>
   createBrowserRouter([
@@ -11,6 +12,10 @@ const createAppRouter = () =>
     {
       path: "/personal-details",
       element: <FormBuilder />,
+    },
+    {
+      path: "/experience-details",
+      element: <ExperienceDetails />,
     },
   ]);
 export const AppRouter = () => {
