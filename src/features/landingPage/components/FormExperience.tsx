@@ -26,6 +26,29 @@ import {
 } from "@/components/ui/select";
 
 export function ExPeriences() {
+  const months = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
+  ];
+  const [years, setYears] = useState<number[]>([]);
+
+  useEffect(() => {
+    const tahun: number[] = [];
+    for (let i = 1990; i <= 2025; i++) {
+      tahun.push(i);
+    }
+    setYears(tahun);
+  }, []); // dijalankan sekali saat komponen pertama kali dimount
   return (
     <section className="flex flex-col gap-5 mb-10 ">
       {/* profile card */}
@@ -73,15 +96,63 @@ export function ExPeriences() {
             <div className=" flex flex-col gap-3 w-1/2">
               <span className="font-bold">Tanggal Mulai</span>
               <div className=" flex gap-3">
-                <AddStartDate />
-                <AddStartYear />
+                {/* Month start */}
+                <Select>
+                  <SelectTrigger className="w-1/2">
+                    <SelectValue placeholder="Bulan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {months.map((m) => (
+                        <SelectItem value={`${m}`}>{m}</SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                {/* Years start */}
+                <Select>
+                  <SelectTrigger className="w-1/2">
+                    <SelectValue placeholder="Bulan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {years.map((y) => (
+                        <SelectItem value={`${y}`}>{y}</SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
             <div className=" flex flex-col gap-3 w-1/2">
               <span className="font-bold">Tanggal Selesai</span>
               <div className=" flex gap-3">
-                <AddEndDate />
-                <AddEndYear />
+                {/* Month End */}
+                <Select>
+                  <SelectTrigger className="w-1/2">
+                    <SelectValue placeholder="Bulan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {months.map((m) => (
+                        <SelectItem value={`${m}`}>{m}</SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                {/* Years End*/}
+                <Select>
+                  <SelectTrigger className="w-1/2">
+                    <SelectValue placeholder="Bulan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {years.map((y) => (
+                        <SelectItem value={`${y}`}>{y}</SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </div>
@@ -122,15 +193,62 @@ export function ExPeriences() {
             <div className=" flex flex-col gap-3 w-1/2">
               <span className="font-bold">Tanggal Mulai</span>
               <div className=" flex gap-3">
-                <StartDateJob />
-                <StartYearJob />
+                <Select>
+                  <SelectTrigger className="w-1/2">
+                    <SelectValue placeholder="Bulan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {months.map((m) => (
+                        <SelectItem value={`${m}`}>{m}</SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                {/* Years start */}
+                <Select>
+                  <SelectTrigger className="w-1/2">
+                    <SelectValue placeholder="Bulan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {years.map((y) => (
+                        <SelectItem value={`${y}`}>{y}</SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
             <div className=" flex flex-col gap-3 w-1/2">
               <span className="font-bold">Tanggal Selesai</span>
               <div className=" flex gap-3">
-                <EndDateJob />
-                <EndYearJob />
+                {/* Month End */}
+                <Select>
+                  <SelectTrigger className="w-1/2">
+                    <SelectValue placeholder="Bulan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {months.map((m) => (
+                        <SelectItem value={`${m}`}>{m}</SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                {/* Years End */}
+                <Select>
+                  <SelectTrigger className="w-1/2">
+                    <SelectValue placeholder="Bulan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {years.map((y) => (
+                        <SelectItem value={`${y}`}>{y}</SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </div>
@@ -293,233 +411,5 @@ export function ExPeriences() {
         </Button>
       </div>
     </section>
-  );
-}
-
-// start Year
-function AddStartDate() {
-  return (
-    <>
-      <Select>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Bulan" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectItem value="Januari">Januari</SelectItem>
-            <SelectItem value="Februari">Februari</SelectItem>
-            <SelectItem value="Maret">Maret</SelectItem>
-            <SelectItem value="April">April</SelectItem>
-            <SelectItem value="Mai">Mai</SelectItem>
-            <SelectItem value="Juni">Juni</SelectItem>
-            <SelectItem value="Juli">Juli</SelectItem>
-            <SelectItem value="Agustus">Agustus</SelectItem>
-            <SelectItem value="Sebtember">Sebtember</SelectItem>
-            <SelectItem value="Oktober">Oktober</SelectItem>
-            <SelectItem value="November">November</SelectItem>
-            <SelectItem value="Desember">Desember</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </>
-  );
-}
-
-function AddStartYear() {
-  const [years, setYears] = useState<number[]>([]);
-
-  useEffect(() => {
-    const tahun: number[] = [];
-    for (let i = 2000; i <= 2025; i++) {
-      tahun.push(i);
-    }
-    setYears(tahun);
-  }, []);
-  return (
-    <>
-      <Select>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Tahun" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            {years.map((t) => (
-              <SelectItem value={`${t}`}>{t}</SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </>
-  );
-}
-
-// end Year
-function AddEndDate() {
-  return (
-    <>
-      <Select>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Bulan" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectItem value="Januari">Januari</SelectItem>
-            <SelectItem value="Februari">Februari</SelectItem>
-            <SelectItem value="Maret">Maret</SelectItem>
-            <SelectItem value="April">April</SelectItem>
-            <SelectItem value="Mai">Mai</SelectItem>
-            <SelectItem value="Juni">Juni</SelectItem>
-            <SelectItem value="Juli">Juli</SelectItem>
-            <SelectItem value="Agustus">Agustus</SelectItem>
-            <SelectItem value="Sebtember">Sebtember</SelectItem>
-            <SelectItem value="Oktober">Oktober</SelectItem>
-            <SelectItem value="November">November</SelectItem>
-            <SelectItem value="Desember">Desember</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </>
-  );
-}
-
-function AddEndYear() {
-  const [years, setYears] = useState<number[]>([]);
-
-  useEffect(() => {
-    const tahun: number[] = [];
-    for (let i = 2000; i <= 2025; i++) {
-      tahun.push(i);
-    }
-    setYears(tahun);
-  }, []); // dijalankan sekali saat komponen pertama kali dimount
-  return (
-    <>
-      <Select>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Tahun" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            {years.map((t) => (
-              <SelectItem value={`${t}`}>{t}</SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </>
-  );
-}
-
-// start Year Pengalaman Kerja
-function StartDateJob() {
-  return (
-    <>
-      <Select>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Bulan" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectItem value="Januari">Januari</SelectItem>
-            <SelectItem value="Februari">Februari</SelectItem>
-            <SelectItem value="Maret">Maret</SelectItem>
-            <SelectItem value="April">April</SelectItem>
-            <SelectItem value="Mai">Mai</SelectItem>
-            <SelectItem value="Juni">Juni</SelectItem>
-            <SelectItem value="Juli">Juli</SelectItem>
-            <SelectItem value="Agustus">Agustus</SelectItem>
-            <SelectItem value="Sebtember">Sebtember</SelectItem>
-            <SelectItem value="Oktober">Oktober</SelectItem>
-            <SelectItem value="November">November</SelectItem>
-            <SelectItem value="Desember">Desember</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </>
-  );
-}
-
-function StartYearJob() {
-  const [years, setYears] = useState<number[]>([]);
-
-  useEffect(() => {
-    const tahun: number[] = [];
-    for (let i = 2000; i <= 2025; i++) {
-      tahun.push(i);
-    }
-    setYears(tahun);
-  }, []);
-  return (
-    <>
-      <Select>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Tahun" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            {years.map((t) => (
-              <SelectItem value={`${t}`}>{t}</SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </>
-  );
-}
-
-// end Year
-function EndDateJob() {
-  return (
-    <>
-      <Select>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Bulan" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectItem value="Januari">Januari</SelectItem>
-            <SelectItem value="Februari">Februari</SelectItem>
-            <SelectItem value="Maret">Maret</SelectItem>
-            <SelectItem value="April">April</SelectItem>
-            <SelectItem value="Mai">Mai</SelectItem>
-            <SelectItem value="Juni">Juni</SelectItem>
-            <SelectItem value="Juli">Juli</SelectItem>
-            <SelectItem value="Agustus">Agustus</SelectItem>
-            <SelectItem value="Sebtember">Sebtember</SelectItem>
-            <SelectItem value="Oktober">Oktober</SelectItem>
-            <SelectItem value="November">November</SelectItem>
-            <SelectItem value="Desember">Desember</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </>
-  );
-}
-
-function EndYearJob() {
-  const [years, setYears] = useState<number[]>([]);
-
-  useEffect(() => {
-    const tahun: number[] = [];
-    for (let i = 2000; i <= 2025; i++) {
-      tahun.push(i);
-    }
-    setYears(tahun);
-  }, []); // dijalankan sekali saat komponen pertama kali dimount
-  return (
-    <>
-      <Select>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Tahun" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            {years.map((t) => (
-              <SelectItem value={`${t}`}>{t}</SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </>
   );
 }
