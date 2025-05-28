@@ -1,165 +1,298 @@
-import InputDemo from "@/components/input-12";
+import DaySelect from "@/components/forms/DaySelect";
+import MonthSelect from "@/components/forms/MonthSelect";
+import YearSelect from "@/components/forms/YearSelect";
+import InputFileImage from "@/components/input-12";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  // CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
-// const months = [
-//   { label: "January", value: "01" },
-//   { label: "February", value: "02" },
-//   { label: "March", value: "03" },
-//   { label: "April", value: "04" },
-//   { label: "May", value: "05" },
-//   { label: "June", value: "06" },
-//   { label: "July", value: "07" },
-//   { label: "August", value: "08" },
-//   { label: "September", value: "09" },
-//   { label: "October", value: "10" },
-//   { label: "November", value: "11" },
-//   { label: "December", value: "12" },
-// ];
+  FormPersonalDetailSchema,
+  type PersonalDetailDTO,
+} from "@/schema/FormPersonalDetail";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 function FormBuilder() {
-  let i = 0;
-  let day = "";
-  while (i < 31) {
-    day = String(i + 1);
-    i++;
+  const [month, setMonth] = useState<string | undefined>();
+
+  // const formSchema = z.object({
+  //   username: z.string().min(2, {
+  //     message: "Username must be at least 2 characters.",
+  //   }),
+  // });
+
+  // const form = useForm<z.infer<typeof formSchema>>({
+  //   resolver: zodResolver(formSchema),
+  // });
+
+  const form = useForm<PersonalDetailDTO>({
+    resolver: zodResolver(FormPersonalDetailSchema),
+  });
+
+  function onSubmit(values: z.infer<typeof FormPersonalDetailSchema>) {
+    console.log(values);
   }
 
   return (
     <div>
-      {/* <nav>Navbar</nav> */}
       <div className="flex flex-col w-full justify-center items-center gap-10 my-10">
         <Card className="w-[50%]">
-          <CardHeader>
-            <div className="flex flex-col border-b-1 w-full py-5">
-              <CardTitle>Detail Pribadi</CardTitle>
-              {/* <CardDescription>
-                Deploy your new project in one-click.
-              </CardDescription> */}
-            </div>
-          </CardHeader>
-          <CardContent>
-            <form className="flex flex-col gap-4">
-              <div className="flex w-full items-center gap-4">
-                <InputDemo />
-                <div className="flex flex-col w-full p-3 space-y-4">
-                  <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="first-name">Nama Depan</Label>
-                    <Input id="first-name" placeholder="" />
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit, (errors) => {
+                console.error("form validation errors:", errors);
+              })}
+              className="flex flex-col gap-4"
+            >
+              <CardHeader>
+                <div className="flex flex-col border-b-1 w-full py-5">
+                  <CardTitle>Detail Pribadi</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-col gap-4">
+                  <div className="flex w-full items-center gap-4">
+                    <InputFileImage />
+                    <div className="flex flex-col w-full p-3 space-y-4">
+                      <div className="flex flex-col space-y-1.5">
+                        <FormField
+                          control={form.control}
+                          name="firstName"
+                          render={({ field }) => (
+                            <FormItem>
+                              <Label htmlFor="first-name">Nama Depan</Label>
+                              <FormControl>
+                                <Input
+                                  placeholder="John"
+                                  id="first-name"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="flex flex-col space-y-1.5">
+                        <FormField
+                          control={form.control}
+                          name="lastName"
+                          render={({ field }) => (
+                            <FormItem>
+                              <Label htmlFor="last-name">Nama Belakang</Label>
+                              <FormControl>
+                                <Input
+                                  placeholder="Doe"
+                                  id="last-name"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="last-name">Nama Belakang</Label>
-                    <Input id="last-name" placeholder="" />
+                  <div className="flex flex-col gap-4">
+                    <div className="grid grid-cols-2 gap-5">
+                      <div className="flex flex-col space-y-1.5">
+                        <FormField
+                          control={form.control}
+                          name="email"
+                          render={({ field }) => (
+                            <FormItem>
+                              <Label htmlFor="email">Email</Label>
+                              <FormControl>
+                                <Input
+                                  placeholder="Doe"
+                                  id="email"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="flex flex-col space-y-1.5">
+                        <FormField
+                          control={form.control}
+                          name="phoneNumber"
+                          render={({ field }) => (
+                            <FormItem>
+                              <Label htmlFor="phone-number">
+                                Nomor Telepon
+                              </Label>
+                              <FormControl>
+                                <Input
+                                  placeholder="Doe"
+                                  id="phone-number"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex flex-col space-y-1.5">
+                      <FormField
+                        control={form.control}
+                        name="address"
+                        render={({ field }) => (
+                          <FormItem>
+                            <Label htmlFor="address">Alamat</Label>
+                            <FormControl>
+                              <Input
+                                placeholder="Doe"
+                                id="address"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-4">
+                    <div className="grid grid-cols-2 gap-5">
+                      <div className="flex flex-col space-y-1.5">
+                        <FormField
+                          control={form.control}
+                          name="postalCode"
+                          render={({ field }) => (
+                            <FormItem>
+                              <Label htmlFor="postal-code">Kode Pos</Label>
+                              <FormControl>
+                                <Input
+                                  placeholder="Doe"
+                                  id="postal-code"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="flex flex-col space-y-1.5">
+                        <FormField
+                          control={form.control}
+                          name="city"
+                          render={({ field }) => (
+                            <FormItem>
+                              <Label htmlFor="city">Kota</Label>
+                              <FormControl>
+                                <Input placeholder="Doe" id="city" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-5">
+                      <div className="flex flex-col space-y-1.5">
+                        {/* Select Tanggal Lahir */}
+                        <Label htmlFor="city">Tanggal Lahir</Label>
+                        <div className="flex gap-3">
+                          <DaySelect />
+                          <MonthSelect value={month} onChange={setMonth} />
+                          <YearSelect />
+                        </div>
+                      </div>
+                      <div className="flex flex-col space-y-1.5">
+                        <FormField
+                          control={form.control}
+                          name="birthPlace"
+                          render={({ field }) => (
+                            <FormItem>
+                              <Label htmlFor="birth-place">Tempat Lahir</Label>
+                              <FormControl>
+                                <Input
+                                  placeholder="Doe"
+                                  id="birth-place"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-5">
+                    <div className="flex flex-col space-y-1.5">
+                      <FormField
+                        control={form.control}
+                        name="linkedinUrl"
+                        render={({ field }) => (
+                          <FormItem>
+                            <Label htmlFor="url-linkedin">
+                              URL Profil Linkedin
+                            </Label>
+                            <FormControl>
+                              <Input
+                                placeholder="Doe"
+                                id="url-linkedin"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="flex flex-col space-y-1.5">
+                      <FormField
+                        control={form.control}
+                        name="websiteUrl"
+                        render={({ field }) => (
+                          <FormItem>
+                            <Label htmlFor="websiteUrl">
+                              Website, Github, dll
+                            </Label>
+                            <FormControl>
+                              <Input
+                                placeholder="Doe"
+                                id="websiteUrl"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="flex flex-col gap-4">
-                <div className="grid grid-cols-2 gap-5">
-                  <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="email">Alamat Email</Label>
-                    <Input id="email" placeholder="" />
-                  </div>
-                  <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="phone_number">Nomor Telepon</Label>
-                    <Input id="phone_number" placeholder="" />
-                  </div>
-                </div>
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="address">Alamat</Label>
-                  <Input id="address" placeholder="" />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-5">
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="postal_code">Kode Pos</Label>
-                  <Input id="postal_code" placeholder="" />
-                </div>
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="city">Kota</Label>
-                  <Input id="city" placeholder="" />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-5">
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="city">Tanggal Lahir</Label>
-                  <div className="flex gap-3">
-                    <Select>
-                      <SelectTrigger className="w-[31%]">
-                        <SelectValue placeholder="Tanggal" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Tanggal</SelectLabel>
-                          {}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    <Select>
-                      <SelectTrigger className="w-[31%]">
-                        <SelectValue placeholder="Bulan" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Bulan</SelectLabel>
-                          <SelectItem value="apple">Apple</SelectItem>
-                          <SelectItem value="banana">Banana</SelectItem>
-                          <SelectItem value="blueberry">Blueberry</SelectItem>
-                          <SelectItem value="grapes">Grapes</SelectItem>
-                          <SelectItem value="pineapple">Pineapple</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    <Select>
-                      <SelectTrigger className="w-[31%]">
-                        <SelectValue placeholder="Tahun" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Tahun</SelectLabel>
-                          <SelectItem value="apple">Apple</SelectItem>
-                          <SelectItem value="banana">Banana</SelectItem>
-                          <SelectItem value="blueberry">Blueberry</SelectItem>
-                          <SelectItem value="grapes">Grapes</SelectItem>
-                          <SelectItem value="pineapple">Pineapple</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="phone_number">Tempat Lahir</Label>
-                  <Input id="phone_number" placeholder="" />
-                </div>
-              </div>
-              {/* <div className="grid grid-flow-col bg-amber-500 grid-rows-3 gap-4">
-                <div className="row-span-3 bg-amber-100">01</div>
-                <div className="col-span-2 bg-amber-200">02</div>
-                <div className="col-span-2 row-span-2 bg-amber-300">03</div>
-              </div> */}
+              </CardContent>
+              <CardFooter className="flex justify-end">
+                {/* <Button variant="outline">Cancel</Button> */}
+                <Button type="submit">Next</Button>
+              </CardFooter>
             </form>
-          </CardContent>
-          <CardFooter className="flex justify-end">
-            {/* <Button variant="outline">Cancel</Button> */}
-            <Button>Next</Button>
-          </CardFooter>
+          </Form>
         </Card>
       </div>
     </div>

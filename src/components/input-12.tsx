@@ -30,7 +30,7 @@ const ImagePreview = ({
   </div>
 );
 
-export default function InputDemo() {
+export default function InputFileImage() {
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
 
   return (
