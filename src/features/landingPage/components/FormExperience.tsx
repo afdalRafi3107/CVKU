@@ -25,18 +25,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export function Pengalaman() {
+export function ExPeriences() {
   return (
     <section className="flex flex-col gap-5 mb-10 ">
       {/* profile card */}
-      <div className="CARD Profile m-auto  w-2/4 border-2 p-4 rounded-2xl">
+      <div className="ProfileCart-Form m-auto  w-2/4 border-2 p-4 rounded-2xl">
         <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
           <FaUserCircle />
           <p>Profile</p>
         </div>
         <form action="" className="p-4 flex flex-col gap-3">
           <div className=" flex flex-col gap-3">
-            <span>Deskripsi</span>
+            <span className="font-bold">Deskripsi</span>
             <Textarea className="h-50" required />
           </div>
 
@@ -49,7 +49,7 @@ export function Pengalaman() {
         </form>
       </div>
       {/* education Card */}
-      <div className="CARD Profile m-auto  w-2/4 border-2 p-4 rounded-2xl">
+      <div className="EducationCart-Form m-auto  w-2/4 border-2 p-4 rounded-2xl">
         <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
           <GiGraduateCap />
           <p>Pendidikan dan kualifikasi</p>
@@ -57,28 +57,28 @@ export function Pengalaman() {
         <form action="" className="p-4 flex flex-col gap-3">
           <div className="flex w-full gap-3">
             <div className=" flex flex-col gap-3 w-1/2">
-              <span>Gelar</span>
+              <span className="font-bold">Gelar</span>
               <Input placeholder="mis. S.Pd" required />
             </div>
             <div className=" flex flex-col gap-3 w-1/2">
-              <span>Kota</span>
+              <span className="font-bold">Kota</span>
               <Input placeholder="mis. Jakarta" required />
             </div>
           </div>
           <div className=" flex flex-col gap-3">
-            <span>Sekolah</span>
+            <span className="font-bold">Sekolah</span>
             <Input placeholder="mis. Universitas Indonesia" required />
           </div>
           <div className="flex w-full gap-3">
             <div className=" flex flex-col gap-3 w-1/2">
-              <span>Tanggal Mulai</span>
+              <span className="font-bold">Tanggal Mulai</span>
               <div className=" flex gap-3">
                 <AddStartDate />
                 <AddStartYear />
               </div>
             </div>
             <div className=" flex flex-col gap-3 w-1/2">
-              <span>Tanggal Selesai</span>
+              <span className="font-bold">Tanggal Selesai</span>
               <div className=" flex gap-3">
                 <AddEndDate />
                 <AddEndYear />
@@ -86,7 +86,7 @@ export function Pengalaman() {
             </div>
           </div>
           <div className=" flex flex-col gap-3">
-            <span>Deskripsi</span>
+            <span className="font-bold">Deskripsi</span>
             <Textarea className="h-50" required />
           </div>
           <div className="end-3 text-right">
@@ -98,7 +98,7 @@ export function Pengalaman() {
         </form>
       </div>
       {/* Pengalaman */}
-      <div className="CARD Profile m-auto  w-2/4 border-2 p-4 rounded-2xl">
+      <div className="ExperienceCart-Form m-auto  w-2/4 border-2 p-4 rounded-2xl">
         <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
           <BsBriefcaseFill />
           <p>Pengalaman Kerja</p>
@@ -106,28 +106,28 @@ export function Pengalaman() {
         <form action="" className="p-4 flex flex-col gap-3">
           <div className="flex w-full gap-3">
             <div className=" flex flex-col gap-3 w-1/2">
-              <span>Posisi Kerja</span>
+              <span className="font-bold">Posisi Kerja</span>
               <Input placeholder="mis. Manager" required />
             </div>
             <div className=" flex flex-col gap-3 w-1/2">
-              <span>Kota</span>
+              <span className="font-bold">Kota</span>
               <Input placeholder="mis. Jakarta" required />
             </div>
           </div>
           <div className=" flex flex-col gap-3">
-            <span>Perusahaan</span>
+            <span className="font-bold">Perusahaan</span>
             <Input placeholder="mis. PT Jaya Abadi" required />
           </div>
           <div className="flex w-full gap-3">
             <div className=" flex flex-col gap-3 w-1/2">
-              <span>Tanggal Mulai</span>
+              <span className="font-bold">Tanggal Mulai</span>
               <div className=" flex gap-3">
                 <StartDateJob />
                 <StartYearJob />
               </div>
             </div>
             <div className=" flex flex-col gap-3 w-1/2">
-              <span>Tanggal Selesai</span>
+              <span className="font-bold">Tanggal Selesai</span>
               <div className=" flex gap-3">
                 <EndDateJob />
                 <EndYearJob />
@@ -135,7 +135,7 @@ export function Pengalaman() {
             </div>
           </div>
           <div className=" flex flex-col gap-3">
-            <span>Deskripsi</span>
+            <span className="font-bold">Deskripsi</span>
             <Textarea className="h-50" required />
           </div>
           <div className="end-3 text-right">
@@ -147,14 +147,14 @@ export function Pengalaman() {
         </form>
       </div>
       {/* Hobi */}
-      <div className="CARD Profile m-auto  w-2/4 border-2 p-4 rounded-2xl">
+      <div className="HobbyCart-Form m-auto  w-2/4 border-2 p-4 rounded-2xl">
         <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
           <BsFillPaletteFill />
           <p>Minat</p>
         </div>
         <form action="" className="p-4 flex flex-col gap-3">
           <div className=" flex flex-col gap-3">
-            <span>Hobi</span>
+            <span className="font-bold">Hobi</span>
             <Input placeholder="mis. Membaca, Kuliner" required />
           </div>
 
@@ -167,7 +167,7 @@ export function Pengalaman() {
         </form>
       </div>
       {/* Social Media */}
-      <div className="CARD Profile m-auto  w-2/4 border-2 p-4 rounded-2xl">
+      <div className="SocialCard-Form Profile m-auto  w-2/4 border-2 p-4 rounded-2xl">
         <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
           <CgMediaLive />
           <p>Social Media</p>
@@ -214,7 +214,7 @@ export function Pengalaman() {
           <div className="flex gap-3 w-full">
             <div className="flex flex-col gap-3 w-full">
               <div className=" flex flex-col gap-3">
-                <p>Keahlian 1</p>
+                <p className="font-bold">Keahlian 1</p>
                 <div className="flex gap-3">
                   <Input placeholder="Mis. Ms Word" required />
                   <Select required>
@@ -235,7 +235,7 @@ export function Pengalaman() {
                 </div>
               </div>
               <div className=" flex flex-col gap-3">
-                <p>Keahlian 2</p>
+                <p className="font-bold">Keahlian 2</p>
                 <div className="flex gap-3">
                   <Input placeholder="Mis. Ms Word" required />
                   <Select required>
@@ -256,7 +256,7 @@ export function Pengalaman() {
                 </div>
               </div>
               <div className=" flex flex-col gap-3">
-                <p>Keahlian 3</p>
+                <p className="font-bold">Keahlian 3</p>
                 <div className="flex gap-3">
                   <Input placeholder="Mis. Ms Word" required />
                   <Select required>

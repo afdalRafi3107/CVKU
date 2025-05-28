@@ -14,7 +14,7 @@ const createAppRouter = () =>
       element: <FormBuilder />,
     },
     {
-      path: "/experience-details",
+      path: "/experiences-details",
       element: <ExperienceDetails />,
     },
   ]);

@@ -1,5 +1,5 @@
-import { Pengalaman } from "@/features/landingPage/components/FormExperience";
+import { ExPeriences } from "@/features/landingPage/components/FormExperience";
 
 export default function ExperienceDetails() {
-  return <Pengalaman />;
+  return <ExPeriences />;
 }
