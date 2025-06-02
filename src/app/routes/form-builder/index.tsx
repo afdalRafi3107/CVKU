@@ -29,7 +29,6 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { usePersonalDetailsStore } from "@/stores/personalDetailsStore";
-import Navbar from "@/features/landingPage/components/Navbar";
 
 function FormBuilder() {
   const setData = usePersonalDetailsStore((state) => state.setData);
@@ -47,7 +46,6 @@ function FormBuilder() {
 
   return (
     <>
-      <Navbar />
       <section className="flex flex-col w-full justify-center items-center gap-10 my-10">
         <Card className="w-[50%]">
           <Form {...form}>
