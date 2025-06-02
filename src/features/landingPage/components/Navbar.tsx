@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Logo from "@/assets/logo.png";
+import { NavLink } from "react-router";
 function Navbar() {
   return (
     <>
@@ -12,7 +13,7 @@ function Navbar() {
             variant={"default"}
             className="bg-green-500 h-12 cursor-pointer text-md font-bold transition active:scale-95 hover:bg-green-400"
           >
-            Create Resume
+            <NavLink to={"/personal-details"}>Create Resume</NavLink>
           </Button>
         </div>
       </nav>
