@@ -3,6 +3,7 @@ import type { PersonalDetailDTO } from "@/schema/FormPersonalDetailsSchema";
 export interface FormPersonalDetailsType {
   firstName: string;
   lastName: string;
+  // imgUrl: string;
   email: string;
   phoneNumber: string;
   address: string;

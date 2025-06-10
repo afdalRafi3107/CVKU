@@ -2,6 +2,13 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+@page {
+  margin: 0; /* Disable margins */
+  size: A4 portrait; /* set the size */
+}
+* {
+  -webkit-print-color-adjust: exact; /* always print background colors */
+}
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
