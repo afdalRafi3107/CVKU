@@ -27,21 +27,24 @@ import { PopoverTrigger } from "@radix-ui/react-popover";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
 import { usePersonalDetailsStore } from "@/stores/personalDetailsStore";
+import { useNavigate } from "react-router";
+import { Calendar } from "@/components/ui/calendar";
+// import { DropdownCalendar } from "@/components/DropdownCalendar";
 
-function FormBuilder() {
-  const setData = usePersonalDetailsStore((state) => state.setData);
+function FormPersonalDetail() {
+  const { setData } = usePersonalDetailsStore();
 
-  const { data } = usePersonalDetailsStore();
   const form = useForm<PersonalDetailDTO>({
     resolver: zodResolver(FormPersonalDetailSchema),
   });
+  const navigate = useNavigate();
 
   function onSubmit(values: PersonalDetailDTO) {
-    console.log(values);
+    if (!values) return;
+    // console.log(values);
     setData(values);
-    console.log("data", data);
+    navigate("/cv-builder/generate-pdf");
   }
 
   return (
@@ -58,11 +61,17 @@ function FormBuilder() {
               <CardHeader>
                 <div className="flex flex-col border-b-1 w-full py-5">
                   <CardTitle>Detail Pribadi</CardTitle>
+                  {/* <img src={} className="size-500" alt="" /> */}
                 </div>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-col gap-4">
                   <div className="flex w-full items-center gap-4">
+                    {/* <FormField
+                      control={form.control}
+                      name="imgUrl"
+                      render={({ field }) => <InputFileImage />}
+                    /> */}
                     <InputFileImage />
                     <div className="flex flex-col w-full p-3 space-y-4">
                       <div className="flex flex-col space-y-1.5">
@@ -76,6 +85,7 @@ function FormBuilder() {
                                 <Input
                                   placeholder="John"
                                   id="first-name"
+                                  type="text"
                                   {...field}
                                 />
                               </FormControl>
@@ -118,6 +128,7 @@ function FormBuilder() {
                                 <Input
                                   placeholder="example@example.com"
                                   id="email"
+                                  type="email"
                                   {...field}
                                 />
                               </FormControl>
@@ -203,12 +214,12 @@ function FormBuilder() {
                     </div>
                     <div className="grid grid-cols-2 gap-5">
                       <div className="flex flex-col space-y-1.5">
-                        <div className="flex gap-3 w-full">
+                        <div className="flex gap-3">
                           <FormField
                             control={form.control}
                             name="birthDate"
                             render={({ field }) => (
-                              <FormItem>
+                              <FormItem className="w-full">
                                 <Label htmlFor="birth-date">
                                   Tanggal Lahir
                                 </Label>
@@ -218,7 +229,7 @@ function FormBuilder() {
                                       <Button
                                         variant={"outline"}
                                         className={cn(
-                                          "w-full pl-3 text-left font-normal",
+                                          "text-left font-normal",
                                           !field.value &&
                                             "text-muted-foreground"
                                         )}
@@ -244,9 +255,9 @@ function FormBuilder() {
                                         date > new Date() ||
                                         date < new Date("1900-01-01")
                                       }
-                                      initialFocus
+                                      captionLayout="dropdown"
+                                      // className="rounded-lg border"
                                     />
-                                    {/* <CustomDropdown /> */}
                                   </PopoverContent>
                                 </Popover>
                                 <FormMessage />
@@ -334,4 +345,4 @@ function FormBuilder() {
   );
 }
 
-export default FormBuilder;
+export default FormPersonalDetail;

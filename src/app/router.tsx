@@ -1,9 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import Home from "./routes/Home";
-import FormBuilder from "./routes/form-builder";
+import FormPersonalDetails from "./routes/cv-builder/FormPersonalDetails";
 import Layout from "./routes/Layout";
-import FormLayout from "./routes/form-builder/FormLayout";
 import NotFoundPage from "./routes/NotFoundPage";
+import CVBuilderLayout from "./routes/cv-builder/CVBuilderLayout";
+import GeneratePdf from "./routes/cv-builder/GeneratePdf";
+import FormExperiences from "./routes/cv-builder/FormExperiences";
 
 const createAppRouter = () =>
   createBrowserRouter([
@@ -13,12 +15,20 @@ const createAppRouter = () =>
       children: [
         { index: true, element: <Home /> },
         {
-          path: "/form-builder",
-          element: <FormLayout />,
+          path: "/cv-builder",
+          element: <CVBuilderLayout />,
           children: [
             {
-              index: true,
-              element: <FormBuilder />,
+              path: "/cv-builder/personal-details",
+              element: <FormPersonalDetails />,
+            },
+            {
+              path: "/cv-builder/experiences",
+              element: <FormExperiences />,
+            },
+            {
+              path: "/cv-builder/generate-pdf",
+              element: <GeneratePdf />,
             },
           ],
         },
