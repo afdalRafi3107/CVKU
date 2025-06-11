@@ -24,8 +24,313 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FaRegTimesCircle } from "react-icons/fa";
+
+import { useForm } from "react-hook-form";
+import {
+  educationSchema,
+  month,
+  type EducationSchema,
+} from "@/Schemas/Expseriences-Schemas/EducationSchemas";
+import { useEducationStore } from "@/store/exsperinceStore/educationStore";
+import { useNavigate } from "react-router";
+import { useDescriptionStore } from "@/store/exsperinceStore/descriptionStore";
+import {
+  descriptionSchema,
+  type descriptionSchemaDTO,
+} from "@/Schemas/Expseriences-Schemas/DescriptionShemas";
+
+import {
+  type experiencesSchemaDTO,
+  experiencesSchema,
+} from "@/Schemas/Expseriences-Schemas/ExperiencesSchemas";
+import { useExperiencesStore } from "@/store/exsperinceStore/experienceStore";
+import { useHobbyStore } from "@/store/exsperinceStore/hobbyStore";
+import {
+  hobbySchema,
+  type hobbySchemaDTO,
+} from "@/Schemas/Expseriences-Schemas/HobbyScemas";
+import { useSocialStore } from "@/store/exsperinceStore/socialMediaStore";
+import {
+  socialSchema,
+  type socialSchemaDTO,
+} from "@/Schemas/Expseriences-Schemas/socialMediaShemas";
+import { useSkillStore } from "@/store/exsperinceStore/skillStore";
+import { skillSchemas, type skillSchemasDTO } from "@/Schemas/SkillSchema";
 
 export function ExPeriences() {
+  const Navigate = useNavigate();
+
+  // useform untuk Educatioan card
+  return (
+    <section className="flex flex-col gap-5 mb-10 ">
+      {/* profile card */}
+      <ProfileCard />
+
+      {/* education Card */}
+      <EducationCard />
+      {/* Pengalaman */}
+      <Experience />
+      {/* Hobi */}
+      <HobbyCard />
+      {/* Social Media */}
+      <SocialMedia />
+      {/* Keahlian */}
+      <Skill />
+      <div className="m-auto w-fit">
+        <Button
+          className="m-auto h-12 text-2xl flex items-center bg-green-500 hover:bg-green-400 cursor-pointer"
+          onClick={() => {
+            Navigate("/experiences-previews");
+          }}
+        >
+          Langkah Selanjutnya
+        </Button>
+      </div>
+    </section>
+  );
+}
+
+function ProfileCard() {
+  const setDescriptions = useDescriptionStore((s) => s.setDescription);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<descriptionSchemaDTO>({
+    mode: "onChange",
+    resolver: zodResolver(descriptionSchema),
+  });
+
+  const onSubmit = (data: descriptionSchemaDTO) => {
+    setDescriptions(data);
+    console.log("descipsi profile : ", data);
+  };
+  return (
+    <>
+      {/* profile card */}
+      <div className="ProfileCart-Form m-auto  w-2/4 border-2 p-4 rounded-2xl">
+        <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
+          <FaUserCircle />
+          <p>Profile</p>
+        </div>
+        <form
+          action=""
+          className="p-4 flex flex-col gap-3"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className=" flex flex-col gap-3">
+            <span className="font-bold">Deskripsi</span>
+            <Textarea {...register("description")} className="h-50" required />
+            {errors.description && (
+              <p className="text-red-500 text-sm">
+                {errors.description.message}
+              </p>
+            )}
+          </div>
+
+          <div className="end-3 text-right">
+            <Button variant={"outline"} type="submit">
+              <IoSave />
+              Simpan
+            </Button>
+          </div>
+        </form>
+      </div>
+    </>
+  );
+}
+
+function EducationCard() {
+  const [years, setYears] = useState<number[]>([]);
+  const setEducations = useEducationStore((s) => s.setEducation);
+
+  useEffect(() => {
+    const tahun: number[] = [];
+    for (let i = 1990; i <= 2025; i++) {
+      tahun.push(i);
+    }
+    setYears(tahun);
+  }, []); // dijalankan sekali saat komponen pertama kali dimount
+
+  // useform untuk Educatioan card
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<EducationSchema>({
+    mode: "onChange",
+    resolver: zodResolver(educationSchema),
+  });
+  const onSubmit = (data: EducationSchema) => {
+    setEducations(data);
+    console.log("data yang di simpan adalah : ", data);
+  };
+  return (
+    <>
+      <div className="EducationCart-Form m-auto  w-2/4 border-2 p-4 rounded-2xl">
+        <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
+          <GiGraduateCap />
+          <p>Pendidikan dan kualifikasi</p>
+        </div>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          action=""
+          className="p-4 flex flex-col gap-3"
+        >
+          <div className="flex w-full gap-3">
+            <div className=" flex flex-col gap-3 w-1/2">
+              <span className="font-bold">Gelar</span>
+              <Input {...register("degree")} placeholder="mis. S.Pd" />
+              {errors.degree && (
+                <p className="text-red-500 text-sm">{errors.degree.message}</p>
+              )}
+            </div>
+            <div className=" flex flex-col gap-3 w-1/2">
+              <span className="font-bold">Kota</span>
+              <Input {...register("city")} placeholder="mis. Jakarta" />
+              {errors.city && (
+                <p className="text-red-500 text-sm">{errors.city.message}</p>
+              )}
+            </div>
+          </div>
+          <div className=" flex flex-col gap-3">
+            <span className="font-bold">Sekolah</span>
+            <Input
+              {...register("school")}
+              placeholder="mis. Universitas Indonesia"
+            />
+            {errors.school && (
+              <p className="text-red-500 text-sm">{errors.school.message}</p>
+            )}
+            <span className="font-bold">Jurusan</span>
+            <Input
+              {...register("major")}
+              placeholder="Mis. Teknik mesin / IPA"
+            />
+            {errors.major && (
+              <p className="text-red-500 text-sm">{errors.major.message}</p>
+            )}
+          </div>
+          <div className="flex w-full gap-3">
+            <div className=" flex flex-col gap-3 w-1/2">
+              <span className="font-bold">Tanggal Mulai</span>
+              <div className=" flex gap-3">
+                {/* Month start */}
+                <Select
+                  onValueChange={(val: string) => setValue("startMonth", val)}
+                >
+                  <SelectTrigger className="w-1/2">
+                    <SelectValue placeholder="Bulan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {month.map((m) => (
+                        <SelectItem value={`${m}`}>{m}</SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                {errors.startMonth && (
+                  <p className="text-red-500 text-sm">
+                    {errors.startMonth.message}
+                  </p>
+                )}
+                {/* Years start */}
+                <Select
+                  onValueChange={(val: string) => setValue("startYear", val)}
+                >
+                  <SelectTrigger className="w-1/2">
+                    <SelectValue placeholder="Tahun" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {years.map((y) => (
+                        <SelectItem value={`${y}`}>{y}</SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                {errors.startYear && (
+                  <p className="text-red-500 text-sm">
+                    {errors.startYear.message}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className=" flex flex-col gap-3 w-1/2">
+              <span className="font-bold">Tanggal Selesai</span>
+              <div className=" flex gap-3">
+                {/* Month End */}
+                <Select
+                  onValueChange={(val: string) => setValue("endMonth", val)}
+                >
+                  <SelectTrigger className="w-1/2">
+                    <SelectValue placeholder="Bulan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {month.map((m) => (
+                        <SelectItem value={`${m}`}>{m}</SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                {errors.endMonth && (
+                  <p className="text-red-500 text-sm">
+                    {errors.endMonth.message}
+                  </p>
+                )}
+                {/* Years End*/}
+                <Select
+                  onValueChange={(val: string) => {
+                    setValue("endYear", val);
+                  }}
+                >
+                  <SelectTrigger className="w-1/2">
+                    <SelectValue placeholder="Tahun" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {years.map((y) => (
+                        <SelectItem value={`${y}`}>{y}</SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                {errors.endYear && (
+                  <p className="text-red-500 text-sm">
+                    {errors.endYear.message}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className=" flex flex-col gap-3">
+            <span className="font-bold">Deskripsi</span>
+            <Textarea {...register("description")} className="h-50" />
+            {errors.description && (
+              <p className="text-red-500 text-sm">
+                {errors.description.message}
+              </p>
+            )}
+          </div>
+          <div className="end-3 text-right">
+            <Button type="submit" variant={"outline"}>
+              <IoSave />
+              Simpan
+            </Button>
+          </div>
+        </form>
+      </div>
+    </>
+  );
+}
+
+function Experience() {
+  const setExperience = useExperiencesStore((s) => s.setExperience);
   const months = [
     "Januari",
     "Februari",
@@ -48,368 +353,351 @@ export function ExPeriences() {
       tahun.push(i);
     }
     setYears(tahun);
-  }, []); // dijalankan sekali saat komponen pertama kali dimount
+  }, []);
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<experiencesSchemaDTO>({
+    mode: "onChange",
+    resolver: zodResolver(experiencesSchema),
+  });
+
+  const onSubmit = (data: experiencesSchemaDTO) => {
+    setExperience(data);
+    console.log("data pengalaman yang di simpan : ", data);
+  };
   return (
-    <section className="flex flex-col gap-5 mb-10 ">
-      {/* profile card */}
-      <div className="ProfileCart-Form m-auto  w-2/4 border-2 p-4 rounded-2xl">
-        <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
-          <FaUserCircle />
-          <p>Profile</p>
-        </div>
-        <form action="" className="p-4 flex flex-col gap-3">
-          <div className=" flex flex-col gap-3">
-            <span className="font-bold">Deskripsi</span>
-            <Textarea className="h-50" required />
+    <div className="ExperienceCart-Form m-auto  w-2/4 border-2 p-4 rounded-2xl">
+      <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
+        <BsBriefcaseFill />
+        <p>Pengalaman Kerja</p>
+      </div>
+      <form
+        action=""
+        className="p-4 flex flex-col gap-3"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div className="flex w-full gap-3">
+          <div className=" flex flex-col gap-3 w-1/2">
+            <span className="font-bold">Posisi Kerja</span>
+            <Input {...register("position")} placeholder="mis. Manager" />
+            {errors.position && (
+              <p className="text-red-500 text-sm">{errors.position.message}</p>
+            )}
           </div>
+          <div className=" flex flex-col gap-3 w-1/2">
+            <span className="font-bold">Kota</span>
+            <Input {...register("city")} placeholder="mis. Jakarta" />
+            {errors.city && (
+              <p className="text-red-500 text-sm">{errors.city.message}</p>
+            )}
+          </div>
+        </div>
+        <div className=" flex flex-col gap-3">
+          <span className="font-bold">Perusahaan</span>
+          <Input {...register("company")} placeholder="mis. PT Jaya Abadi" />
+          {errors.company && (
+            <p className="text-red-500 text-sm">{errors.company.message}</p>
+          )}
+        </div>
+        <div className="flex w-full gap-3">
+          <div className=" flex flex-col gap-3 w-1/2">
+            <span className="font-bold">Tanggal Mulai</span>
+            <div className=" flex gap-3">
+              <Select
+                onValueChange={(val: string) => setValue("startMonth", val)}
+              >
+                <SelectTrigger className="w-1/2">
+                  <SelectValue placeholder="Bulan" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {months.map((m) => (
+                      <SelectItem value={`${m}`}>{m}</SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              {errors.startMonth && (
+                <p className="text-red-500 text-sm">
+                  {errors.startMonth.message}
+                </p>
+              )}
+              {/* Years start */}
+              <Select
+                onValueChange={(val: string) => setValue("startYear", val)}
+              >
+                <SelectTrigger className="w-1/2">
+                  <SelectValue placeholder="Tahun" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {years.map((y) => (
+                      <SelectItem value={`${y}`}>{y}</SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              {errors.startYear && (
+                <p className="text-red-500 text-sm">
+                  {errors.startYear.message}
+                </p>
+              )}
+            </div>
+          </div>
+          <div className=" flex flex-col gap-3 w-1/2">
+            <span className="font-bold">Tanggal Selesai</span>
+            <div className=" flex gap-3">
+              {/* Month End */}
+              <Select
+                onValueChange={(val: string) => setValue("endMonth", val)}
+              >
+                <SelectTrigger className="w-1/2">
+                  <SelectValue placeholder="Bulan" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {months.map((m) => (
+                      <SelectItem value={`${m}`}>{m}</SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              {errors.endMonth && (
+                <p className="text-red-500 text-sm">
+                  {errors.endMonth.message}
+                </p>
+              )}
+              {/* Years End */}
+              <Select onValueChange={(val: string) => setValue("endYear", val)}>
+                <SelectTrigger className="w-1/2">
+                  <SelectValue placeholder="Bulan" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {years.map((y) => (
+                      <SelectItem value={`${y}`}>{y}</SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              {errors.endYear && (
+                <p className="text-red-500 text-sm">{errors.endYear.message}</p>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className=" flex flex-col gap-3">
+          <span className="font-bold">Deskripsi</span>
+          <Textarea {...register("description")} className="h-50" required />
+          {errors.description && (
+            <p className="text-red-500 text-sm">{errors.description.message}</p>
+          )}
+        </div>
+        <div className="end-3 text-right">
+          <Button variant={"outline"} type="submit">
+            <IoSave />
+            Simpan
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
+}
 
-          <div className="end-3 text-right">
-            <Button variant={"outline"}>
-              <IoSave />
-              Simpan
-            </Button>
-          </div>
-        </form>
-      </div>
-      {/* education Card */}
-      <div className="EducationCart-Form m-auto  w-2/4 border-2 p-4 rounded-2xl">
-        <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
-          <GiGraduateCap />
-          <p>Pendidikan dan kualifikasi</p>
-        </div>
-        <form action="" className="p-4 flex flex-col gap-3">
-          <div className="flex w-full gap-3">
-            <div className=" flex flex-col gap-3 w-1/2">
-              <span className="font-bold">Gelar</span>
-              <Input placeholder="mis. S.Pd" required />
-            </div>
-            <div className=" flex flex-col gap-3 w-1/2">
-              <span className="font-bold">Kota</span>
-              <Input placeholder="mis. Jakarta" required />
-            </div>
-          </div>
-          <div className=" flex flex-col gap-3">
-            <span className="font-bold">Sekolah</span>
-            <Input placeholder="mis. Universitas Indonesia" required />
-          </div>
-          <div className="flex w-full gap-3">
-            <div className=" flex flex-col gap-3 w-1/2">
-              <span className="font-bold">Tanggal Mulai</span>
-              <div className=" flex gap-3">
-                {/* Month start */}
-                <Select>
-                  <SelectTrigger className="w-1/2">
-                    <SelectValue placeholder="Bulan" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {months.map((m) => (
-                        <SelectItem value={`${m}`}>{m}</SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                {/* Years start */}
-                <Select>
-                  <SelectTrigger className="w-1/2">
-                    <SelectValue placeholder="Bulan" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {years.map((y) => (
-                        <SelectItem value={`${y}`}>{y}</SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <div className=" flex flex-col gap-3 w-1/2">
-              <span className="font-bold">Tanggal Selesai</span>
-              <div className=" flex gap-3">
-                {/* Month End */}
-                <Select>
-                  <SelectTrigger className="w-1/2">
-                    <SelectValue placeholder="Bulan" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {months.map((m) => (
-                        <SelectItem value={`${m}`}>{m}</SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                {/* Years End*/}
-                <Select>
-                  <SelectTrigger className="w-1/2">
-                    <SelectValue placeholder="Bulan" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {years.map((y) => (
-                        <SelectItem value={`${y}`}>{y}</SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </div>
-          <div className=" flex flex-col gap-3">
-            <span className="font-bold">Deskripsi</span>
-            <Textarea className="h-50" required />
-          </div>
-          <div className="end-3 text-right">
-            <Button variant={"outline"}>
-              <IoSave />
-              Simpan
-            </Button>
-          </div>
-        </form>
-      </div>
-      {/* Pengalaman */}
-      <div className="ExperienceCart-Form m-auto  w-2/4 border-2 p-4 rounded-2xl">
-        <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
-          <BsBriefcaseFill />
-          <p>Pengalaman Kerja</p>
-        </div>
-        <form action="" className="p-4 flex flex-col gap-3">
-          <div className="flex w-full gap-3">
-            <div className=" flex flex-col gap-3 w-1/2">
-              <span className="font-bold">Posisi Kerja</span>
-              <Input placeholder="mis. Manager" required />
-            </div>
-            <div className=" flex flex-col gap-3 w-1/2">
-              <span className="font-bold">Kota</span>
-              <Input placeholder="mis. Jakarta" required />
-            </div>
-          </div>
-          <div className=" flex flex-col gap-3">
-            <span className="font-bold">Perusahaan</span>
-            <Input placeholder="mis. PT Jaya Abadi" required />
-          </div>
-          <div className="flex w-full gap-3">
-            <div className=" flex flex-col gap-3 w-1/2">
-              <span className="font-bold">Tanggal Mulai</span>
-              <div className=" flex gap-3">
-                <Select>
-                  <SelectTrigger className="w-1/2">
-                    <SelectValue placeholder="Bulan" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {months.map((m) => (
-                        <SelectItem value={`${m}`}>{m}</SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                {/* Years start */}
-                <Select>
-                  <SelectTrigger className="w-1/2">
-                    <SelectValue placeholder="Bulan" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {years.map((y) => (
-                        <SelectItem value={`${y}`}>{y}</SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <div className=" flex flex-col gap-3 w-1/2">
-              <span className="font-bold">Tanggal Selesai</span>
-              <div className=" flex gap-3">
-                {/* Month End */}
-                <Select>
-                  <SelectTrigger className="w-1/2">
-                    <SelectValue placeholder="Bulan" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {months.map((m) => (
-                        <SelectItem value={`${m}`}>{m}</SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                {/* Years End */}
-                <Select>
-                  <SelectTrigger className="w-1/2">
-                    <SelectValue placeholder="Bulan" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {years.map((y) => (
-                        <SelectItem value={`${y}`}>{y}</SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </div>
-          <div className=" flex flex-col gap-3">
-            <span className="font-bold">Deskripsi</span>
-            <Textarea className="h-50" required />
-          </div>
-          <div className="end-3 text-right">
-            <Button variant={"outline"}>
-              <IoSave />
-              Simpan
-            </Button>
-          </div>
-        </form>
-      </div>
-      {/* Hobi */}
-      <div className="HobbyCart-Form m-auto  w-2/4 border-2 p-4 rounded-2xl">
-        <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
-          <BsFillPaletteFill />
-          <p>Minat</p>
-        </div>
-        <form action="" className="p-4 flex flex-col gap-3">
-          <div className=" flex flex-col gap-3">
-            <span className="font-bold">Hobi</span>
-            <Input placeholder="mis. Membaca, Kuliner" required />
-          </div>
+function HobbyCard() {
+  const setHobby = useHobbyStore((s) => s.setHobby);
 
-          <div className="end-3 text-right">
-            <Button variant={"outline"}>
-              <IoSave />
-              Simpan
-            </Button>
-          </div>
-        </form>
-      </div>
-      {/* Social Media */}
-      <div className="SocialCard-Form Profile m-auto  w-2/4 border-2 p-4 rounded-2xl">
-        <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
-          <CgMediaLive />
-          <p>Social Media</p>
-        </div>
-        <form action="" className="p-4 flex flex-col gap-3">
-          <div className="flex gap-3 w-full">
-            <div className="flex flex-col gap-3 w-1/2">
-              <div className=" flex  gap-3 items-center">
-                <BsLinkedin className="text-3xl" />
-                <Input placeholder="Username" required />
-              </div>
-              <div className=" flex gap-3 items-center">
-                <BsInstagram className="text-3xl" />
-                <Input placeholder="Usernmae" required />
-              </div>
-            </div>
-            <div className="flex flex-col gap-3 w-1/2">
-              <div className=" flex  gap-3 items-center">
-                <BsGithub className="text-3xl" />
-                <Input placeholder="Username" required />
-              </div>
-              <div className=" flex gap-3 items-center">
-                <BsFacebook className="text-3xl" />
-                <Input placeholder="Username" required />
-              </div>
-            </div>
-          </div>
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<hobbySchemaDTO>({
+    mode: "onChange",
+    resolver: zodResolver(hobbySchema),
+  });
 
-          <div className="end-3 text-right">
-            <Button variant={"outline"}>
-              <IoSave />
-              Simpan
-            </Button>
-          </div>
-        </form>
+  const onSubmit = (data: hobbySchemaDTO) => {
+    setHobby(data);
+    console.log("Hobby", data);
+  };
+  return (
+    <div className="HobbyCart-Form m-auto  w-2/4 border-2 p-4 rounded-2xl">
+      <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
+        <BsFillPaletteFill />
+        <p>Minat</p>
       </div>
-      {/* Keahlian */}
-      <div className="CARD Profile m-auto  w-2/4 border-2 p-4 rounded-2xl">
-        <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
-          <FaBrain />
-          <p>Keahlian</p>
+      <form
+        action=""
+        className="p-4 flex flex-col gap-3"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div className=" flex flex-col gap-3">
+          <span className="font-bold">Hobi</span>
+          <Input
+            {...register("hobby")}
+            placeholder="mis. Membaca, Kuliner"
+            required
+          />
+          {errors.hobby && (
+            <p className="text-red-500 text-sm">{errors.hobby.message}</p>
+          )}
         </div>
-        <form action="" className="p-4 flex flex-col gap-3">
-          <div className="flex gap-3 w-full">
-            <div className="flex flex-col gap-3 w-full">
-              <div className=" flex flex-col gap-3">
-                <p className="font-bold">Keahlian 1</p>
-                <div className="flex gap-3">
-                  <Input placeholder="Mis. Ms Word" required />
-                  <Select required>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Level" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="Ahli">Ahli</SelectItem>
-                        <SelectItem value="Berpengalaman">
-                          Berpengalaman
-                        </SelectItem>
-                        <SelectItem value="Menengah">Menengah</SelectItem>
-                        <SelectItem value="Pemula">Pemula</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <div className=" flex flex-col gap-3">
-                <p className="font-bold">Keahlian 2</p>
-                <div className="flex gap-3">
-                  <Input placeholder="Mis. Ms Word" required />
-                  <Select required>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Level" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="Ahli">Ahli</SelectItem>
-                        <SelectItem value="Berpengalaman">
-                          Berpengalaman
-                        </SelectItem>
-                        <SelectItem value="Menengah">Menengah</SelectItem>
-                        <SelectItem value="Pemula">Pemula</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <div className=" flex flex-col gap-3">
-                <p className="font-bold">Keahlian 3</p>
-                <div className="flex gap-3">
-                  <Input placeholder="Mis. Ms Word" required />
-                  <Select required>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Level" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="Ahli">Ahli</SelectItem>
-                        <SelectItem value="Berpengalaman">
-                          Berpengalaman
-                        </SelectItem>
-                        <SelectItem value="Menengah">Menengah</SelectItem>
-                        <SelectItem value="Pemula">Pemula</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
+
+        <div className="end-3 text-right">
+          <Button variant={"outline"} type="submit">
+            <IoSave />
+            Simpan
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+function SocialMedia() {
+  const setSocial = useSocialStore((s) => s.setSocial);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<socialSchemaDTO>({
+    mode: "onChange",
+    resolver: zodResolver(socialSchema),
+  });
+
+  const onSubmit = (data: socialSchemaDTO) => {
+    setSocial(data);
+    console.log("Social Media : ", data);
+  };
+  return (
+    <div className="SocialCard-Form Profile m-auto  w-2/4 border-2 p-4 rounded-2xl">
+      <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
+        <CgMediaLive />
+        <p>Social Media</p>
+      </div>
+      <form
+        action=""
+        className="p-4 flex flex-col gap-3"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div className="flex gap-3 w-full">
+          <div className="flex flex-col gap-3 w-1/2">
+            <div className=" flex  gap-3 items-center">
+              <BsLinkedin className="text-3xl" />
+              <Input {...register("lk")} placeholder="Username" required />
+            </div>
+            <div className=" flex gap-3 items-center">
+              <BsInstagram className="text-3xl" />
+              <Input {...register("ig")} placeholder="Username" required />
             </div>
           </div>
-
-          <div className="end-3 text-right">
-            <Button variant={"outline"}>
-              <IoSave />
-              Simpan
-            </Button>
+          <div className="flex flex-col gap-3 w-1/2">
+            <div className=" flex  gap-3 items-center">
+              <BsGithub className="text-3xl" />
+              <Input {...register("git")} placeholder="Username" required />
+            </div>
+            <div className=" flex gap-3 items-center">
+              <BsFacebook className="text-3xl" />
+              <Input {...register("fb")} placeholder="Username" required />
+            </div>
           </div>
-        </form>
+        </div>
+
+        <div className="end-3 text-right">
+          <Button variant={"outline"} type="submit">
+            <IoSave />
+            Simpan
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+function Skill() {
+  const setSkill = useSkillStore((s) => s.setSkill);
+  const [skill, setAddSkill] = useState<string[]>([]);
+  const [input, setinput] = useState("");
+
+  const {
+    handleSubmit,
+    setValue,
+    register,
+    formState: { errors },
+  } = useForm<skillSchemasDTO>({
+    mode: "onSubmit",
+    resolver: zodResolver(skillSchemas),
+  });
+
+  const onSubmit = (data: skillSchemasDTO) => {
+    setSkill(data);
+    console.log("skill : ", data);
+  };
+  const tambahSkill = () => {
+    setAddSkill((prev) => [...prev, input]);
+    setinput("");
+    console.log(skill.join(", "));
+  };
+  const hapusSkill = (index: number) => {
+    setAddSkill((prev) => prev.filter((_, i) => i !== index));
+  };
+  const str = skill.join(", ");
+  return (
+    <div className="CARD Profile m-auto  w-2/4 border-2 p-4 rounded-2xl">
+      <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
+        <FaBrain />
+        <p>Keahlian</p>
       </div>
-      <div className="m-auto w-fit">
-        <Button className="m-auto h-12 text-2xl flex items-center bg-green-500 hover:bg-green-400 cursor-pointer">
-          Langkah Selanjutnya
-        </Button>
+
+      <div className="flex gap-3 w-full">
+        <div className="flex flex-col gap-3 w-full">
+          <div className=" flex flex-col gap-3">
+            <p className="font-bold">Keahlian</p>
+            <div>
+              {skill.map((skill, index) => (
+                <li key={index}>
+                  {skill}{" "}
+                  <Button
+                    onClick={() => hapusSkill(index)}
+                    className="p-0 h-0 w-fit text-red-400 text-sm italic underline ml-2 font-light cursor-pointer"
+                  >
+                    hapus
+                  </Button>
+                </li>
+              ))}
+            </div>
+            <div className="flex gap-3">
+              <Input
+                value={input}
+                onChange={(e) => setinput(e.target.value)}
+                placeholder="Mis. PHP"
+              />
+              <Button onClick={tambahSkill}>Tambah</Button>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
+      <form
+        action=""
+        className="p-4 flex flex-col text-right"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <Input
+          {...register("name1")}
+          value={str}
+          className="w-2 h-0 border-0 text-right mb-0 ml-[95%]"
+        />
+        <div className="end-3 text-right -mt-3">
+          <Button variant={"outline"} type="submit">
+            <IoSave />
+            Simpan
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 }
