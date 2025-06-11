@@ -25,39 +25,38 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FaRegTimesCircle } from "react-icons/fa";
 
-import { useForm } from "react-hook-form";
+import {
+  descriptionSchema,
+  type descriptionSchemaDTO,
+} from "@/Schemas/Expseriences-Schemas/DescriptionShemas";
 import {
   educationSchema,
   month,
   type EducationSchema,
 } from "@/Schemas/Expseriences-Schemas/EducationSchemas";
-import { useEducationStore } from "@/store/exsperinceStore/educationStore";
-import { useNavigate } from "react-router";
 import { useDescriptionStore } from "@/store/exsperinceStore/descriptionStore";
-import {
-  descriptionSchema,
-  type descriptionSchemaDTO,
-} from "@/Schemas/Expseriences-Schemas/DescriptionShemas";
+import { useEducationStore } from "@/store/exsperinceStore/educationStore";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 
 import {
-  type experiencesSchemaDTO,
   experiencesSchema,
+  type experiencesSchemaDTO,
 } from "@/Schemas/Expseriences-Schemas/ExperiencesSchemas";
-import { useExperiencesStore } from "@/store/exsperinceStore/experienceStore";
-import { useHobbyStore } from "@/store/exsperinceStore/hobbyStore";
 import {
   hobbySchema,
   type hobbySchemaDTO,
 } from "@/Schemas/Expseriences-Schemas/HobbyScemas";
-import { useSocialStore } from "@/store/exsperinceStore/socialMediaStore";
 import {
   socialSchema,
   type socialSchemaDTO,
 } from "@/Schemas/Expseriences-Schemas/socialMediaShemas";
-import { useSkillStore } from "@/store/exsperinceStore/skillStore";
 import { skillSchemas, type skillSchemasDTO } from "@/Schemas/SkillSchema";
+import { useExperiencesStore } from "@/store/exsperinceStore/experienceStore";
+import { useHobbyStore } from "@/store/exsperinceStore/hobbyStore";
+import { useSkillStore } from "@/store/exsperinceStore/skillStore";
+import { useSocialStore } from "@/store/exsperinceStore/socialMediaStore";
 
 export function ExPeriences() {
   const Navigate = useNavigate();
@@ -593,16 +592,25 @@ function SocialMedia() {
             <div className=" flex gap-3 items-center">
               <BsInstagram className="text-3xl" />
               <Input {...register("ig")} placeholder="Username" required />
+              {errors.ig && (
+                <p className="text-red-500 text-sm">{errors.ig.message}</p>
+              )}
             </div>
           </div>
           <div className="flex flex-col gap-3 w-1/2">
             <div className=" flex  gap-3 items-center">
               <BsGithub className="text-3xl" />
               <Input {...register("git")} placeholder="Username" required />
+              {errors.git && (
+                <p className="text-red-500 text-sm">{errors.git.message}</p>
+              )}
             </div>
             <div className=" flex gap-3 items-center">
               <BsFacebook className="text-3xl" />
               <Input {...register("fb")} placeholder="Username" required />
+              {errors.fb && (
+                <p className="text-red-500 text-sm">{errors.fb.message}</p>
+              )}
             </div>
           </div>
         </div>
@@ -623,12 +631,7 @@ function Skill() {
   const [skill, setAddSkill] = useState<string[]>([]);
   const [input, setinput] = useState("");
 
-  const {
-    handleSubmit,
-    setValue,
-    register,
-    formState: { errors },
-  } = useForm<skillSchemasDTO>({
+  const { handleSubmit, register } = useForm<skillSchemasDTO>({
     mode: "onSubmit",
     resolver: zodResolver(skillSchemas),
   });
@@ -676,6 +679,7 @@ function Skill() {
                 onChange={(e) => setinput(e.target.value)}
                 placeholder="Mis. PHP"
               />
+
               <Button onClick={tambahSkill}>Tambah</Button>
             </div>
           </div>
