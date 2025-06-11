@@ -37,7 +37,7 @@ import {
 } from "@/Schemas/Expseriences-Schemas/EducationSchemas";
 import { useDescriptionStore } from "@/store/exsperinceStore/descriptionStore";
 import { useEducationStore } from "@/store/exsperinceStore/educationStore";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 
 import {
@@ -52,11 +52,16 @@ import {
   socialSchema,
   type socialSchemaDTO,
 } from "@/Schemas/Expseriences-Schemas/socialMediaShemas";
-import { skillSchemas, type skillSchemasDTO } from "@/Schemas/SkillSchema";
+import {
+  skillItemSchemas,
+  SkillSchemas,
+  type skillSchemasDTO,
+} from "@/Schemas/Expseriences-Schemas/SkillSchema";
 import { useExperiencesStore } from "@/store/exsperinceStore/experienceStore";
 import { useHobbyStore } from "@/store/exsperinceStore/hobbyStore";
 import { useSkillStore } from "@/store/exsperinceStore/skillStore";
 import { useSocialStore } from "@/store/exsperinceStore/socialMediaStore";
+import DinamicFields from "@/components/DinamicFileds";
 
 export function ExPeriences() {
   const Navigate = useNavigate();
@@ -627,36 +632,41 @@ function SocialMedia() {
 }
 
 function Skill() {
-  const setSkill = useSkillStore((s) => s.setSkill);
-  const [skill, setAddSkill] = useState<string[]>([]);
-  const [input, setinput] = useState("");
-
-  const { handleSubmit, register } = useForm<skillSchemasDTO>({
-    mode: "onSubmit",
-    resolver: zodResolver(skillSchemas),
+  const method = useForm<skillSchemasDTO>({
+    resolver: zodResolver(SkillSchemas),
+    defaultValues: { nama: [{ skill: "" }] },
   });
 
+  const setSkill = useSkillStore((s) => s.setData);
+
   const onSubmit = (data: skillSchemasDTO) => {
+    console.log("yang tersubmit : ", data);
     setSkill(data);
-    console.log("skill : ", data);
   };
-  const tambahSkill = () => {
-    setAddSkill((prev) => [...prev, input]);
-    setinput("");
-    console.log(skill.join(", "));
-  };
-  const hapusSkill = (index: number) => {
-    setAddSkill((prev) => prev.filter((_, i) => i !== index));
-  };
-  const str = skill.join(", ");
   return (
     <div className="CARD Profile m-auto  w-2/4 border-2 p-4 rounded-2xl">
       <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
         <FaBrain />
         <p>Keahlian</p>
       </div>
-
-      <div className="flex gap-3 w-full">
+      <div>
+        <FormProvider {...method}>
+          <form
+            action=""
+            onSubmit={method.handleSubmit(onSubmit)}
+            className="p-4 flex flex-col gap-3"
+          >
+            <DinamicFields />
+            <div className="end-3 text-right">
+              <Button variant={"outline"} type="submit">
+                <IoSave />
+                Simpan
+              </Button>
+            </div>
+          </form>
+        </FormProvider>
+      </div>
+      {/* <div className="flex gap-3 w-full">
         <div className="flex flex-col gap-3 w-full">
           <div className=" flex flex-col gap-3">
             <p className="font-bold">Keahlian</p>
@@ -701,7 +711,7 @@ function Skill() {
             Simpan
           </Button>
         </div>
-      </form>
+      </form> */}
     </div>
   );
 }
