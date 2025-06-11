@@ -1,11 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
-import Home from "./routes/Home";
-import FormPersonalDetails from "./routes/cv-builder/FormPersonalDetails";
-import Layout from "./routes/Layout";
-import NotFoundPage from "./routes/NotFoundPage";
-import CVBuilderLayout from "./routes/cv-builder/CVBuilderLayout";
-import GeneratePdf from "./routes/cv-builder/GeneratePdf";
-import FormExperiences from "./routes/cv-builder/FormExperiences";
+
+import LandingRoute from "./routes/landing";
+import FormBuilder from "./routes/formBuilder/FormBuilder";
+import ExperienceDetails from "./routes/formBuilder/FormExperience";
+
 
 const createAppRouter = () =>
   createBrowserRouter([
@@ -37,6 +35,10 @@ const createAppRouter = () =>
     {
       path: "*",
       element: <NotFoundPage />,
+    },
+    {
+      path: "/experiences-details",
+      element: <ExperienceDetails />,
     },
   ]);
 
