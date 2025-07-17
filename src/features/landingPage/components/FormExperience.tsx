@@ -71,13 +71,12 @@ export function ExPeriences() {
     <section className="flex flex-col gap-5 mb-10 ">
       {/* profile card */}
       <ProfileCard />
-
       {/* education Card */}
       <EducationCard />
       {/* Pengalaman */}
       <Experience />
-      {/* Hobi */}
-      <HobbyCard />
+      {/* Hobi
+      <HobbyCard /> */}
       {/* Social Media */}
       <SocialMedia />
       {/* Keahlian */}
@@ -86,7 +85,7 @@ export function ExPeriences() {
         <Button
           className="m-auto h-12 text-2xl flex items-center bg-green-500 hover:bg-green-400 cursor-pointer"
           onClick={() => {
-            Navigate("/experiences-previews");
+            Navigate("/cv-builder/generate-pdf");
           }}
         >
           Langkah Selanjutnya
@@ -114,7 +113,7 @@ function ProfileCard() {
   return (
     <>
       {/* profile card */}
-      <div className="ProfileCart-Form m-auto  w-2/4 border-2 p-4 rounded-2xl">
+      <div className="ProfileCart-Form m-auto  w-2/4 border p-4 rounded-2xl">
         <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
           <FaUserCircle />
           <p>Profile</p>
@@ -174,7 +173,7 @@ function EducationCard() {
   };
   return (
     <>
-      <div className="EducationCart-Form m-auto  w-2/4 border-2 p-4 rounded-2xl">
+      <div className="EducationCart-Form m-auto  w-2/4 border p-4 rounded-2xl">
         <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
           <GiGraduateCap />
           <p>Pendidikan dan kualifikasi</p>
@@ -374,7 +373,7 @@ function Experience() {
     console.log("data pengalaman yang di simpan : ", data);
   };
   return (
-    <div className="ExperienceCart-Form m-auto  w-2/4 border-2 p-4 rounded-2xl">
+    <div className="ExperienceCart-Form m-auto  w-2/4 border p-4 rounded-2xl">
       <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
         <BsBriefcaseFill />
         <p>Pengalaman Kerja</p>
@@ -529,7 +528,7 @@ function HobbyCard() {
     console.log("Hobby", data);
   };
   return (
-    <div className="HobbyCart-Form m-auto  w-2/4 border-2 p-4 rounded-2xl">
+    <div className="HobbyCart-Form m-auto  w-2/4 border p-4 rounded-2xl">
       <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
         <BsFillPaletteFill />
         <p>Minat</p>
@@ -578,7 +577,7 @@ function SocialMedia() {
     console.log("Social Media : ", data);
   };
   return (
-    <div className="SocialCard-Form Profile m-auto  w-2/4 border-2 p-4 rounded-2xl">
+    <div className="SocialCard-Form Profile m-auto  w-2/4 border p-4 rounded-2xl">
       <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
         <CgMediaLive />
         <p>Social Media</p>
@@ -644,7 +643,7 @@ function Skill() {
     setSkill(data);
   };
   return (
-    <div className="CARD Profile m-auto  w-2/4 border-2 p-4 rounded-2xl">
+    <div className="CARD Profile m-auto  w-2/4 border p-4 rounded-2xl">
       <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
         <FaBrain />
         <p>Keahlian</p>

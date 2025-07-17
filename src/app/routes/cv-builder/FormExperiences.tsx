@@ -1,7 +1,11 @@
+import { ExPeriences } from "@/features/landingPage/components/FormExperience";
+import Footer from "../footer";
+
 function FormExperiences() {
   return (
-    <div>
-      <h1>Form Experiences</h1>
+    <div className="mt-10">
+      <ExPeriences />
+      <Footer />
     </div>
   );
 }

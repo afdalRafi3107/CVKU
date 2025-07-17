@@ -2,6 +2,7 @@
 
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { useProfileImageStore } from "@/store/exsperinceStore/imageStore";
 import { ImageIcon, XCircleIcon } from "lucide-react";
 import { useState } from "react";
 import Dropzone from "react-dropzone";
@@ -32,6 +33,7 @@ const ImagePreview = ({
 
 export default function InputFileImage() {
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
+  const { setImage } = useProfileImageStore();
 
   return (
     <div className="w-full max-w-40 space-y-1.5">
@@ -51,6 +53,7 @@ export default function InputFileImage() {
               if (file) {
                 const imageUrl = URL.createObjectURL(file);
                 setProfilePicture(imageUrl);
+                setImage(imageUrl);
               }
             }}
             accept={{

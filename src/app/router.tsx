@@ -8,6 +8,8 @@ import FormPersonalDetails from "./routes/cv-builder/FormPersonalDetails";
 import FormExperiences from "./routes/cv-builder/FormExperiences";
 import GeneratePdf from "./routes/cv-builder/GeneratePdf";
 import NotFoundPage from "./routes/NotFoundPage";
+import Templates from "./routes/cv-builder/Templates";
+import Contact from "./routes/cv-builder/Contact";
 
 const createAppRouter = () =>
   createBrowserRouter([
@@ -16,6 +18,14 @@ const createAppRouter = () =>
       element: <Layout />,
       children: [
         { index: true, element: <Home /> },
+        {
+          path: "/cv-builder/templates",
+          element: <Templates />,
+        },
+        {
+          path: "/cv-builder/contact",
+          element: <Contact />,
+        },
         {
           path: "/cv-builder",
           element: <CVBuilderLayout />,
@@ -43,6 +53,10 @@ const createAppRouter = () =>
     {
       path: "/experiences-details",
       element: <ExperienceDetails />,
+    },
+    {
+      path: "/templates",
+      element: <Templates />,
     },
   ]);
 

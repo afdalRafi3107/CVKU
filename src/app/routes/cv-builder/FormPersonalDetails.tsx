@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  FormPersonalDetailSchema,
+  formPersonalDetailSchema,
   type PersonalDetailDTO,
 } from "@/schema/FormPersonalDetailsSchema";
 import { useForm } from "react-hook-form";
@@ -30,13 +30,14 @@ import { format } from "date-fns";
 import { usePersonalDetailsStore } from "@/stores/personalDetailsStore";
 import { useNavigate } from "react-router";
 import { Calendar } from "@/components/ui/calendar";
+import Footer from "../footer";
 // import { DropdownCalendar } from "@/components/DropdownCalendar";
 
 function FormPersonalDetail() {
   const { setData } = usePersonalDetailsStore();
 
   const form = useForm<PersonalDetailDTO>({
-    resolver: zodResolver(FormPersonalDetailSchema),
+    resolver: zodResolver(formPersonalDetailSchema),
   });
   const navigate = useNavigate();
 
@@ -44,7 +45,7 @@ function FormPersonalDetail() {
     if (!values) return;
     // console.log(values);
     setData(values);
-    navigate("/cv-builder/generate-pdf");
+    navigate("/cv-builder/experiences");
   }
 
   return (
@@ -341,6 +342,7 @@ function FormPersonalDetail() {
           </Form>
         </Card>
       </section>
+      <Footer />
     </>
   );
 }
