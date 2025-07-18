@@ -68,6 +68,7 @@ function GeneratePdf() {
                 <img
                   src={profileImage || "https://via.placeholder.com/200"}
                   alt=""
+                  className="w-40 h-50 object-cover"
                 />
                 <div className=" flex flex-col gap-2">
                   <h1 className="text-5xl font-bold">

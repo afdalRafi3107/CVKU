@@ -54,7 +54,7 @@ function Templates() {
               {/* RIGHT: IMAGE SECTION */}
               <div className="w-full md:w-1/2 flex justify-center">
                 <img
-                  src="/images/template1.png" // ganti path sesuai gambarmu
+                  src="/images/template1.png"
                   alt="Resume Preview"
                   className="max-h-[480px] w-auto rounded-md drop-shadow-xl object-contain"
                 />
