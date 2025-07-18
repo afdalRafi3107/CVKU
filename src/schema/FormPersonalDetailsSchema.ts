@@ -1,5 +1,4 @@
-import type { FormPersonalDetailsType } from "@/types/formPersonalDetailsType";
-import { z, ZodType } from "zod";
+import { z } from "zod";
 
 export const formPersonalDetailSchema = z.object({
   firstName: z.string().trim().nonempty({ message: "First Name is required" }),

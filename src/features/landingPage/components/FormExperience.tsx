@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import {
   BsBriefcaseFill,
   BsFacebook,
-  BsFillPaletteFill,
+  // BsFillPaletteFill,
   BsGithub,
   BsInstagram,
   BsLinkedin,
@@ -44,21 +44,20 @@ import {
   experiencesSchema,
   type experiencesSchemaDTO,
 } from "@/Schemas/Expseriences-Schemas/ExperiencesSchemas";
-import {
-  hobbySchema,
-  type hobbySchemaDTO,
-} from "@/Schemas/Expseriences-Schemas/HobbyScemas";
+// import {
+//   hobbySchema,
+//   type hobbySchemaDTO,
+// } from "@/Schemas/Expseriences-Schemas/HobbyScemas";
 import {
   socialSchema,
   type socialSchemaDTO,
 } from "@/Schemas/Expseriences-Schemas/socialMediaShemas";
 import {
-  skillItemSchemas,
   SkillSchemas,
   type skillSchemasDTO,
 } from "@/Schemas/Expseriences-Schemas/SkillSchema";
 import { useExperiencesStore } from "@/store/exsperinceStore/experienceStore";
-import { useHobbyStore } from "@/store/exsperinceStore/hobbyStore";
+// import { useHobbyStore } from "@/store/exsperinceStore/hobbyStore";
 import { useSkillStore } from "@/store/exsperinceStore/skillStore";
 import { useSocialStore } from "@/store/exsperinceStore/socialMediaStore";
 import DinamicFields from "@/components/DinamicFileds";
@@ -511,55 +510,55 @@ function Experience() {
   );
 }
 
-function HobbyCard() {
-  const setHobby = useHobbyStore((s) => s.setHobby);
+// function HobbyCard() {
+//   const setHobby = useHobbyStore((s) => s.setHobby);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<hobbySchemaDTO>({
-    mode: "onChange",
-    resolver: zodResolver(hobbySchema),
-  });
+//   const {
+//     register,
+//     handleSubmit,
+//     formState: { errors },
+//   } = useForm<hobbySchemaDTO>({
+//     mode: "onChange",
+//     resolver: zodResolver(hobbySchema),
+//   });
 
-  const onSubmit = (data: hobbySchemaDTO) => {
-    setHobby(data);
-    console.log("Hobby", data);
-  };
-  return (
-    <div className="HobbyCart-Form m-auto  w-2/4 border p-4 rounded-2xl">
-      <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
-        <BsFillPaletteFill />
-        <p>Minat</p>
-      </div>
-      <form
-        action=""
-        className="p-4 flex flex-col gap-3"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <div className=" flex flex-col gap-3">
-          <span className="font-bold">Hobi</span>
-          <Input
-            {...register("hobby")}
-            placeholder="mis. Membaca, Kuliner"
-            required
-          />
-          {errors.hobby && (
-            <p className="text-red-500 text-sm">{errors.hobby.message}</p>
-          )}
-        </div>
+//   const onSubmit = (data: hobbySchemaDTO) => {
+//     setHobby(data);
+//     console.log("Hobby", data);
+//   };
+//   return (
+//     <div className="HobbyCart-Form m-auto  w-2/4 border p-4 rounded-2xl">
+//       <div className="flex items-center gap-3 text-2xl font-semibold border-b-2 p-4   ">
+//         <BsFillPaletteFill />
+//         <p>Minat</p>
+//       </div>
+//       <form
+//         action=""
+//         className="p-4 flex flex-col gap-3"
+//         onSubmit={handleSubmit(onSubmit)}
+//       >
+//         <div className=" flex flex-col gap-3">
+//           <span className="font-bold">Hobi</span>
+//           <Input
+//             {...register("hobby")}
+//             placeholder="mis. Membaca, Kuliner"
+//             required
+//           />
+//           {errors.hobby && (
+//             <p className="text-red-500 text-sm">{errors.hobby.message}</p>
+//           )}
+//         </div>
 
-        <div className="end-3 text-right">
-          <Button variant={"outline"} type="submit">
-            <IoSave />
-            Simpan
-          </Button>
-        </div>
-      </form>
-    </div>
-  );
-}
+//         <div className="end-3 text-right">
+//           <Button variant={"outline"} type="submit">
+//             <IoSave />
+//             Simpan
+//           </Button>
+//         </div>
+//       </form>
+//     </div>
+//   );
+// }
 
 function SocialMedia() {
   const setSocial = useSocialStore((s) => s.setSocial);
