@@ -1,54 +1,152 @@
-# React + TypeScript + Vite
+# CVKU Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend project untuk aplikasi **CVKU** yang dibangun menggunakan **React + TypeScript** dengan bundler **Vite**, state management menggunakan **Zustand & TanStack Query**, validasi menggunakan **Zod**, serta styling menggunakan **TailwindCSS**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tech Stack
 
-## Expanding the ESLint configuration
+| Category | Tech / Library |
+|----------|----------------|
+| Framework | React 19, TypeScript |
+| Bundler | Vite |
+| Styling | TailwindCSS, class-variance-authority, tailwind-merge, tw-animate-css |
+| UI Components | Radix UI, lucide-react, react-icons |
+| Form Handling | react-hook-form, @hookform/resolvers, zod |
+| State Management | Zustand |
+| Data Fetching | TanStack React Query |
+| Routing | react-router v7 |
+| Date Picker | react-datepicker, react-day-picker |
+| File / Image Tools | react-dropzone, html2canvas-pro, jspdf, @react-pdf/renderer |
+| Email Service | emailjs-com |
+| Utilities | date-fns, clsx |
+| Dev Tools | ESLint, TypeScript, Vite preview |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 📂 Project Structure
+
+```
+.
+├── node_modules/
+├── public_images/            # Public static assets
+├── src/
+│   ├── app/                  # Main app setup
+│   ├── assets/               # Images, fonts, icons
+│   ├── components/           # Reusable components
+│   ├── constants/            # Constant values
+│   ├── features/             # Feature-based modules
+│   │   └── landingPage/
+│   │       └── components/
+│   ├── hooks/                # Custom React hooks
+│   ├── lib/                  # Helpers, utilities
+│   ├── schema/               # Form validation schemas (Zod)
+│   ├── Schemas/              # Additional schemas
+│   ├── store/                # Zustand store
+│   │   └── experienceStore/
+│   ├── stores/               # Other store logic
+│   ├── styles/               # Global styles
+│   ├── types/                # TypeScript types/interfaces
+│   ├── main.tsx
+│   └── vite-env.d.ts
+├── .gitignore
+├── components.json
+├── eslint.config.js
+├── index.html
+├── package.json
+├── package-lock.json
+├── tsconfig.json
+├── tsconfig.app.json
+├── tsconfig.node.json
+├── vite.config.ts
+└── README.md
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 📥 Cara Clone & Menjalankan Project
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### 1️⃣ Clone Repository
+
+```sh
+git clone https://github.com/afdalRafi3107/CVKU.git
+cd CVKU
 ```
+
+### 2️⃣ Install Dependencies
+
+```sh
+npm install
+```
+
+atau jika menggunakan **pnpm**:
+
+```sh
+pnpm install
+```
+
+### 3️⃣ Setup Environment (opsional jika ada API)
+
+Buat file `.env` di root folder dan isi sesuai kebutuhan, contoh:
+
+```
+VITE_API_URL=https://api.example.com
+```
+
+### 4️⃣ Jalankan Development Server
+
+```sh
+npm run dev
+```
+
+Aplikasi akan berjalan di:
+```
+http://localhost:5173
+```
+
+### 5️⃣ Build Production
+
+```sh
+npm run build
+```
+
+### 6️⃣ Preview Build
+
+```sh
+npm run preview
+```
+
+---
+
+## ✅ Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Menjalankan Vite dev server |
+| `npm run build` | Build TypeScript + Vite production bundle |
+| `npm run preview` | Menjalankan preview hasil build |
+| `npm run lint` | Menjalankan ESLint |
+
+---
+
+## 📌 Requirements
+
+- Node.js **v18+**
+- npm / pnpm / yarn
+- Git
+
+---
+
+## 📄 License
+
+MIT License – bebas digunakan & dikembangkan.
+
+---
+
+## 🤝 Contributing
+
+Pull Request & Issue sangat diterima! Silakan **fork**, buat branch, lalu kirim PR.
+
+---
+
+Jika ingin ditambahkan **badge**, screenshot preview, atau dokumentasi API, cukup beri tahu saya 👍
